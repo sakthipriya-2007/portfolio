@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sakthi Priya R – Software Engineer & Frontend Developer building modern web experiences." />
+  <meta name="keywords" content="frontend developer, software engineer, portfolio, web development, computer science" />
+  <meta name="author" content="Sakthi Priya R" />
+  <meta property="og:title" content="Sakthi Priya R – Software Engineer & Frontend Developer" />
+  <meta property="og:description" content="Building modern web experiences through clean code and creative design." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Sakthi Priya R – Computer Science Student & Web Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ── DESIGN TOKENS ─────────────────────────────────────── */
+    :root {
+      --ink:      #0f0e0d;
+      --paper:    #f5f0e8;
+      --accent:   #c94f2c;
+      --mid:      #7a6e5f;
+      --line:     #d6cfc4;
+      --card-bg:  #ede8df;
+
+      --serif:    'DM Serif Display', Georgia, serif;
+      --mono:     'DM Mono', 'Courier New', monospace;
+      --sans:     'DM Sans', system-ui, sans-serif;
+
+      --gap:      clamp(1rem, 3vw, 2rem);
+      --max:      72rem;
+      --radius:   4px;
+    }
+
+    /* ── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    /* ── SKIP LINK (accessibility) ─────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--accent);
+      color: #fff;
+      padding: .5rem 1rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      border-radius: var(--radius);
+      z-index: 9999;
+      text-decoration: none;
+      transition: top .2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ── LAYOUT HELPERS ────────────────────────────────────── */
+    .container {
+      width: min(var(--max), 100% - 2 * var(--gap));
+      margin-inline: auto;
+    }
+
+    /* ── HEADER / NAV ──────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      padding-block: .9rem;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      letter-spacing: -.01em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .logo span { color: var(--accent); }
+
+    nav[aria-label="Primary"] ul {
+      list-style: none;
+      display: flex;
+      gap: clamp(.75rem, 2vw, 1.5rem);
+      flex-wrap: wrap;
+    }
+
+    nav[aria-label="Primary"] a {
+      font-family: var(--mono);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-decoration: none;
+      color: var(--mid);
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    nav[aria-label="Primary"] a:hover,
+    nav[aria-label="Primary"] a[aria-current="page"] {
+      color: var(--ink);
+      border-color: var(--accent);
+    }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    #home {
+      padding-block: clamp(4rem, 10vw, 8rem) clamp(3rem, 6vw, 5rem);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      max-width: 16ch;
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      color: var(--mid);
+      max-width: 46ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.5rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s, transform .15s;
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+    /* ── SECTION HEADING ───────────────────────────────────── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      line-height: 1.2;
+      margin-bottom: .5rem;
+    }
+
+    section { padding-block: clamp(3rem, 7vw, 6rem); }
+    section + section { border-top: 1px solid var(--line); }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: center;
+    }
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-avatar {
+      aspect-ratio: 3/4;
+      background: var(--card-bg);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .about-avatar::after {
+      content: 'A·R';
+      font-family: var(--serif);
+      font-size: 4rem;
+      color: var(--line);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-text p { color: var(--mid); margin-bottom: 1rem; }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1.5rem;
+    }
+    .chip {
+      font-family: var(--mono);
+      font-size: .72rem;
+      padding: .3rem .7rem;
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      color: var(--mid);
+    }
+
+    /* ── WORK / PROJECTS ───────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+      gap: var(--gap);
+      margin-top: 2.5rem;
+    }
+
+    article.project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      transition: box-shadow .2s, transform .2s;
+    }
+    article.project-card:hover {
+      box-shadow: 0 8px 24px rgba(15,14,13,.08);
+      transform: translateY(-2px);
+    }
+
+    .project-number {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--accent);
+      letter-spacing: .1em;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: auto;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--mono);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: .5rem;
+      transition: gap .2s;
+    }
+    .project-link:hover { gap: .65rem; }
+    .project-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ── CONTACT ───────────────────────────────────────────── */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    @media (max-width: 640px) { .contact-wrapper { grid-template-columns: 1fr; } }
+
+    .contact-info p { color: var(--mid); margin-bottom: 1.5rem; }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-top: 1.5rem;
+    }
+    .contact-detail a {
+      font-family: var(--mono);
+      font-size: .82rem;
+      color: var(--mid);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .contact-detail a:hover { color: var(--accent); }
+    .contact-detail a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* ── FORM ──────────────────────────────────────────────── */
+    form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+
+    label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    input, textarea, select {
+      font-family: var(--sans);
+      font-size: 1rem;
+      padding: .7rem .9rem;
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input::placeholder, textarea::placeholder { color: var(--line); }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201,79,44,.15);
+    }
+    textarea { resize: vertical; min-height: 9rem; }
+
+    .form-note {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--mid);
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding-block: 2rem;
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--mid);
+    }
+    .social-links {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+    }
+    .social-links a {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .social-links a:hover { color: var(--accent); }
+    .social-links a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* ── DIVIDER LINE ──────────────────────────────────────── */
+    .rule {
+      width: 3rem;
+      height: 1px;
+      background: var(--accent);
+      margin-block: 1.5rem;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-fade] {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity .6s ease, transform .6s ease;
+      }
+      [data-fade].visible {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to main content (WCAG 2.4.1) -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ── HEADER ─────────────────────────────────── -->
+  <header role="banner">
+    <div class="container">
+      <a class="logo" href="#home" aria-label="Sakthi Priya R – Home">Sakthi<span>.</span>Priya</a>
+      <nav aria-label="Primary">
+        <ul role="list">
+          <li><a href="#home"    aria-current="page">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ───────────────────────────── -->
+  <main id="main" tabindex="-1">
+
+    <!-- HOME / HERO -->
+    <section id="home" aria-labelledby="hero-heading">
+      <div class="container">
+        <p class="hero-eyebrow" aria-label="Role">Software Engineer &amp; Frontend Developer</p>
+        <h1 id="hero-heading">
+          Building <em>clean</em><br />web experiences.
+        </h1>
+        <p class="hero-desc">
+          I design and build web applications that balance aesthetics, performance, 
+          and accessibility — from concept to production.
+        </p>
+        <div class="btn-group">
+          <a href="#work" class="btn btn-primary" aria-label="View my project portfolio">
+            View Work
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="btn btn-outline" aria-label="Get in touch with me">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+
+      
+
+      <div class="about-text" data-fade>
+        <p class="section-label">About</p>
+        <h2 id="about-heading">Hello, I'm Sakthi Priya R.</h2>
+
+        <div class="rule"></div>
+
+        <p>
+          I am a Computer Science student passionate about web development,
+          programming, and emerging technologies. I enjoy building responsive,
+          user-friendly websites and applications that combine creativity with
+          functionality.
+        </p>
+
+        <p>
+          My technical skills include HTML, CSS, JavaScript, Bootstrap,
+          Python, Java, MySQL, Git, and GitHub. Through academic projects,
+          internships, certifications, and continuous learning, I am constantly
+          expanding my knowledge and practical experience.
+        </p>
+
+        <p>
+          I am a quick learner, a team player, and an enthusiastic problem
+          solver who enjoys turning ideas into real-world solutions. My goal
+          is to contribute to innovative projects while growing as a software
+          developer and technology professional.
+        </p>
+
+        <div class="skill-chips">
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Bootstrap</span>
+          <span class="chip">Python</span>
+          <span class="chip">Java</span>
+          <span class="chip">C</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Git</span>
+          <span class="chip">GitHub</span>
+          <span class="chip">Responsive Design</span>
+          <span class="chip">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- WORK / PROJECTS -->
+    <section id="work" aria-labelledby="work-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Selected Work</p>
+        <h2 id="work-heading">Projects</h2>
+        <div class="rule" aria-hidden="true"></div>
+
+        <div class="projects-grid">
+
+          <article class="project-card" data-fade aria-labelledby="proj1-title">
+            <p class="project-number" aria-hidden="true">01</p>
+            <h3 id="proj1-title">Student Portfolio Website</h3>
+            <p>A fully responsive personal portfolio website built with semantic HTML5, CSS3, and JavaScript showcasing projects and skills.</p>
+            <div class="project-tags" role="list" aria-label="Technologies used">
+              <span class="chip" role="listitem">HTML5</span>
+              <span class="chip" role="listitem">CSS3</span>
+              <span class="chip" role="listitem">JavaScript</span>
+            </div>
+            <a href="#" class="project-link" aria-label="View Student Portfolio Website project details">
+              View Project <span aria-hidden="true">→</span>
+            </a>
+          </article>
+
+          <article class="project-card" data-fade aria-labelledby="proj2-title">
+            <p class="project-number" aria-hidden="true">02</p>
+            <h3 id="proj2-title">To-Do List App</h3>
+            <p>An interactive task management app with CRUD operations, local storage persistence, and a clean accessible UI.</p>
+            <div class="project-tags" role="list" aria-label="Technologies used">
+              <span class="chip" role="listitem">HTML5</span>
+              <span class="chip" role="listitem">CSS3</span>
+              <span class="chip" role="listitem">JavaScript</span>
+            </div>
+            <a href="#" class="project-link" aria-label="View To-Do List App project details">
+              View Project <span aria-hidden="true">→</span>
+            </a>
+          </article>
+
+          <article class="project-card" data-fade aria-labelledby="proj3-title">
+            <p class="project-number" aria-hidden="true">03</p>
+            <h3 id="proj3-title">Weather Dashboard</h3>
+            <p>A weather application fetching real-time data from an API, displaying forecasts with a clean and responsive interface.</p>
+            <div class="project-tags" role="list" aria-label="Technologies used">
+              <span class="chip" role="listitem">HTML5</span>
+              <span class="chip" role="listitem">CSS3</span>
+              <span class="chip" role="listitem">JavaScript</span>
+              <span class="chip" role="listitem">REST API</span>
+            </div>
+            <a href="#" class="project-link" aria-label="View Weather Dashboard project details">
+              View Project <span aria-hidden="true">→</span>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="contact-wrapper">
+
+          <div class="contact-info" data-fade>
+            <p class="section-label" aria-hidden="true">Contact</p>
+            <h2 id="contact-heading">Let's work together.</h2>
+            <div class="rule" aria-hidden="true"></div>
+            <p>
+              I'm open to internship opportunities, collaborations, and exciting projects. Drop me a message — I'd love to connect!
+            </p>
+            <nav class="contact-detail" aria-label="Contact details">
+              <a href="mailto:sakthipriyarajendran0609@gmail.com" aria-label="Email: sakthipriyarajendran0609@gmail.com">
+                <span aria-hidden="true">✉</span> sakthipriyarajendran0609@gmail.com
+              </a>
+              <a href="https://linkedin.com/in/sakthi-priya-r" target="_blank" rel="noopener noreferrer"
+                 aria-label="LinkedIn: Sakthi Priya R (opens in new tab)">
+                <span aria-hidden="true">in</span> linkedin.com/in/sakthi-priya-r
+              </a>
+              <a href="https://github.com/SakthiPriyaR" target="_blank" rel="noopener noreferrer"
+                 aria-label="GitHub: Sakthi Priya R (opens in new tab)">
+                <span aria-hidden="true">⌥</span> github.com/SakthiPriyaR
+              </a>
+            </nav>
+          </div>
+
+          <!-- ACCESSIBLE CONTACT FORM -->
+          <div data-fade>
+            <form
+              id="contact-form"
+              action="#"
+              method="post"
+              aria-label="Contact form"
+              novalidate
+            >
+              <div class="field">
+                <label for="name">Full Name <span aria-hidden="true">*</span></label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  autocomplete="name"
+                  required
+                  aria-required="true"
+                  aria-describedby="name-hint"
+                  placeholder="Jane Doe"
+                />
+                <span id="name-hint" class="form-note">Your first and last name.</span>
+              </div>
+
+              <div class="field">
+                <label for="email">Email Address <span aria-hidden="true">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                  aria-describedby="email-hint"
+                  placeholder="jane@example.com"
+                />
+                <span id="email-hint" class="form-note">I'll never share your email.</span>
+              </div>
+
+              <div class="field">
+                <label for="subject">Subject <span aria-hidden="true">*</span></label>
+                <select id="subject" name="subject" required aria-required="true">
+                  <option value="" disabled selected>Select a topic…</option>
+                  <option value="freelance">Freelance Project</option>
+                  <option value="fulltime">Full-Time Role</option>
+                  <option value="collab">Collaboration</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="message">Message <span aria-hidden="true">*</span></label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  aria-required="true"
+                  aria-describedby="msg-hint"
+                  placeholder="Tell me about your project…"
+                ></textarea>
+                <span id="msg-hint" class="form-note">Minimum 20 characters.</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary" aria-label="Send your message">
+                Send Message <span aria-hidden="true">→</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <footer role="contentinfo">
+    <div class="container">
+      <p class="footer-copy">
+  <span aria-hidden="true">©</span> 2026 Sakthi Priya R. All rights reserved.
+</p>
+      <nav aria-label="Social media links">
+        <ul class="social-links" role="list">
+          <li>
+            <a href="https://github.com/SakthiPriyaR" target="_blank" rel="noopener noreferrer"
+               aria-label="GitHub (opens in new tab)">GitHub</a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/sakthi-priya-r" target="_blank" rel="noopener noreferrer"
+               aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/SakthiPriyaR" target="_blank" rel="noopener noreferrer"
+               aria-label="Twitter (opens in new tab)">Twitter</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in (respects prefers-reduced-motion via CSS)
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      }),
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('[data-fade]').forEach(el => observer.observe(el));
+
+    // Active nav link highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('nav[aria-label="Primary"] a');
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => {
+            a.removeAttribute('aria-current');
+            if (a.getAttribute('href') === '#' + entry.target.id) {
+              a.setAttribute('aria-current', 'page');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55%' });
+
+    sections.forEach(s => sectionObserver.observe(s));
+
+    // Basic client-side form validation with accessible error messaging
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      form.querySelectorAll('[required]').forEach(field => {
+        const errorId = field.id + '-error';
+        let errEl = document.getElementById(errorId);
+
+        if (!field.value.trim()) {
+          valid = false;
+          if (!errEl) {
+            errEl = document.createElement('span');
+            errEl.id = errorId;
+            errEl.setAttribute('role', 'alert');
+            errEl.style.cssText = 'font-family:var(--mono);font-size:.7rem;color:var(--accent);';
+            field.parentNode.appendChild(errEl);
+          }
+          errEl.textContent = 'This field is required.';
+          field.setAttribute('aria-describedby', (field.getAttribute('aria-describedby') || '') + ' ' + errorId);
+          if (valid === false) field.focus(); // focus first error
+          valid = false;
+        } else if (errEl) {
+          errEl.remove();
+        }
+      });
+
+      if (valid) {
+        const btn = form.querySelector('[type="submit"]');
+        btn.textContent = 'Message Sent ✓';
+        btn.disabled = true;
+        btn.setAttribute('aria-label', 'Message sent successfully');
+      }
+    });
+  </script>
+</body>
+</html>
